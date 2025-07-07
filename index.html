@@ -1,0 +1,1047 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-content-key="meta_title">СтройПрофи - Надёжные решения в строительстве</title>
+    <meta name="description" 
+          data-content-key="meta_description"
+          content="Профессиональный подход к каждому проекту с гарантией качества и соблюдением сроков">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#0d9488',
+                        secondary: '#0f766e',
+                        accent: '#f59e0b',
+                        dark: '#0c4a6e',
+                        light: '#f0fdfa'
+                    },
+                    fontFamily: {
+                        heading: ['Montserrat', 'sans-serif'],
+                        body: ['Roboto', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        .hero-bg {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1504307651254-35680f356dfd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+        }
+        .counter-item {
+            transition: transform 0.3s ease;
+        }
+        .counter-item:hover {
+            transform: translateY(-5px);
+        }
+        .service-card {
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
+        }
+        .gallery-item {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .gallery-item:hover {
+            transform: scale(1.03);
+        }
+        .contact-form input, .contact-form textarea {
+            transition: all 0.3s ease;
+        }
+        .contact-form input:focus, .contact-form textarea:focus {
+            border-color: #0d9488;
+            box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.2);
+        }
+        .mobile-menu {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+        .mobile-menu.open {
+            max-height: 500px;
+        }
+        .stat-number {
+            transition: all 1s ease;
+        }
+        .modal-overlay {
+            background-color: rgba(0, 0, 0, 0.5);
+            transition: opacity 0.3s ease;
+        }
+        .modal-content {
+            position: relative;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        .modal-image-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-image {
+            max-width: 100%;
+            max-height: 70vh;
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+        #fullscreen-image {
+            background-color: rgba(0, 0, 0, 0.9);
+        }
+        .fullscreen-image {
+            cursor: grab;
+        }
+        .fullscreen-image:active {
+            cursor: grabbing;
+        }
+        .zoom-controls {
+            z-index: 10;
+        }
+        .close-fullscreen {
+            z-index: 10;
+        }
+    </style>
+</head>
+<body class="font-body text-gray-700 bg-gray-50">
+    <header class="fixed w-full bg-white shadow-md z-50">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center">
+                    <div class="bg-primary w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-xl mr-2">SP</div>
+                    <span class="md:text-lg lg:text-xl font-bold text-dark font-heading">
+                        <span data-content-key="company_name">Строй</span>
+                        <span data-content-key="company_name_highlight" class="text-primary">Профи</span>
+                    </span>
+                </div>
+                
+                <nav class="hidden md:flex md:space-x-4 lg:space-x-15 md:text-sm lg:text-base">
+                    <a href="#home" class="text-primary font-medium border-b-2 border-primary pb-1" 
+                       data-content-key="menu_home">Главная</a>
+                    <a href="#about" class="hover:text-primary transition" 
+                       data-content-key="menu_about">О компании</a>
+                    <a href="#services" class="hover:text-primary transition" 
+                       data-content-key="menu_services">Услуги</a>
+                    <a href="all-works.html" class="hover:text-primary transition" 
+                       data-content-key="menu_all_works">Все работы</a>
+                    <a href="gallery-ful.html" class="hover:text-primary transition" 
+                       data-content-key="menu_gallery">Галерея</a>
+                    <a href="#contacts" class="hover:text-primary transition" 
+                       data-content-key="menu_contacts">Контакты</a>
+                </nav>
+                
+                <div class="hidden md:block">
+                    <a href="tel:+79999999999" class="bg-primary text-white rounded-full transition font-medium md:p-2 lg:px-6 lg:py-2 flex items-center justify-center"
+                            data-content-key="header_phone">
+                        <i class="fas fa-phone-alt md:mr-0 lg:mr-2"></i>
+                        <span class="hidden lg:inline" data-content-key="phone_number">+7 (999) 999-99-99</span>
+                    </a>
+                </div>
+                
+                <button id="mobile-menu-button" class="md:hidden text-gray-700">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+            </div>
+            
+            <div id="mobile-menu" class="mobile-menu md:hidden">
+                <div class="flex flex-col space-y-3 pb-4">
+                    <a href="#home" class="text-primary font-medium py-2" 
+                       data-content-key="menu_home">Главная</a>
+                    <a href="#about" class="py-2 hover:text-primary transition" 
+                       data-content-key="menu_about">О компании</a>
+                    <a href="#services" class="py-2 hover:text-primary transition" 
+                       data-content-key="menu_services">Услуги</a>
+                    <a href="all-works.html" class="py-2 hover:text-primary transition" 
+                       data-content-key="menu_all_works">Все работы</a>
+                    <a href="gallery-ful.html" class="py-2 hover:text-primary transition" 
+                       data-content-key="menu_gallery">Галерея</a>
+                    <a href="#contacts" class="py-2 hover:text-primary transition" 
+                       data-content-key="menu_contacts">Контакты</a>
+                    <a href="tel:+79999999999" class="bg-primary hover:bg-secondary text-white px-6 py-2 rounded-full transition font-medium mt-2 flex items-center"
+                            data-content-key="mobile_phone">
+                        <i class="fas fa-phone-alt mr-2"></i>
+                        <span data-content-key="phone_number">Позвонить</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section id="home" class="hero-bg pt-32 pb-24 text-white">
+        <div class="container mx-auto px-4 text-center">
+            <h1 class="text-4xl md:text-6xl font-bold mb-6 font-heading" 
+                data-content-key="hero_title">Надёжные решения в строительстве</h1>
+            <p class="text-xl max-w-3xl mx-auto mb-10" 
+               data-content-key="hero_subtitle">Профессиональный подход к каждому проекту с гарантией качества и соблюдением сроков</p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <button class="bg-accent hover:bg-amber-600 text-white px-8 py-4 rounded-full text-lg font-bold transition"
+                        data-content-key="hero_btn_primary">
+                    Оставить заявку
+                </button>
+                <button class="bg-transparent border-2 border-white hover:bg-white/20 text-white px-8 py-4 rounded-full text-lg font-bold transition"
+                        data-content-key="hero_btn_secondary">
+                    Наши работы
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 font-heading text-dark" 
+                    data-content-key="about_title">О нашей компании</h2>
+                <div class="w-20 h-1 bg-primary mx-auto"></div>
+            </div>
+            
+            <div class="flex flex-col md:flex-row items-center gap-10">
+                <div class="md:w-1/2">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="rounded-xl overflow-hidden shadow-lg">
+                            <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" 
+                                 alt="Строительная площадка" 
+                                 class="w-full h-64 object-cover"
+                                 data-image-key="about_image1"
+                                 loading="lazy">
+                        </div>
+                        <div class="rounded-xl overflow-hidden shadow-lg">
+                            <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" 
+                                 alt="Готовый дом" 
+                                 class="w-full h-64 object-cover"
+                                 data-image-key="about_image2"
+                                 loading="lazy">
+                        </div>
+                        <div class="col-span-2 rounded-xl overflow-hidden shadow-lg">
+                            <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80" 
+                                 alt="Команда строителей" 
+                                 class="w-full h-64 object-cover"
+                                 data-image-key="about_image3"
+                                 loading="lazy">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="md:w-1/2">
+                    <h3 class="text-2xl font-bold mb-6 text-dark" 
+                        data-content-key="about_subtitle">СтройПрофи - ваш надежный партнер в строительстве</h3>
+                    <p class="mb-4" data-content-key="about_text1">Компания "СтройПрофи" основана в 2010 году и за это время зарекомендовала себя как надежный подрядчик в сфере строительства и ремонта.</p>
+                    <p class="mb-4" data-content-key="about_text2">Мы специализируемся на строительстве частных домов, ремонте квартир и коммерческих помещений, отделочных работах и реконструкции зданий.</p>
+                    <p class="mb-6" data-content-key="about_text3">Наша команда состоит из высококвалифицированных специалистов с многолетним опытом работы. Мы используем только качественные материалы и современные технологии строительства.</p>
+                    
+                    <div data-dynamic-type="list" data-content-key="advantages_list">
+                        <div class="flex items-center">
+                            <div class="mr-4 text-primary">
+                                <i class="fas fa-check-circle text-2xl"></i>
+                            </div>
+                            <p data-content-key="advantage1">Гарантия на все виды работ до 5 лет</p>
+                        </div>
+                        <div class="flex items-center mt-3">
+                            <div class="mr-4 text-primary">
+                                <i class="fas fa-check-circle text-2xl"></i>
+                            </div>
+                            <p data-content-key="advantage2">Строгое соблюдение на сроки и бюджет</p>
+                        </div>
+                        <div class="flex items-center mt-3">
+                            <div class="mr-4 text-primary">
+                                <i class="fas fa-check-circle text-2xl"></i>
+                            </div>
+                            <p data-content-key="advantage3">Индивидуальный подход к каждому клиенту</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="services" class="py-20 bg-light">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 font-heading text-dark" 
+                    data-content-key="services_title">Наши услуги</h2>
+                <div class="w-20 h-1 bg-primary mx-auto"></div>
+                <p class="mt-6 max-w-2xl mx-auto" 
+                   data-content-key="services_subtitle">Мы предлагаем полный спектр строительных услуг от проектирования до сдачи объекта под ключ</p>
+            </div>
+            
+            <div data-dynamic-type="services" data-content-key="services_list">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Сварочные работы -->
+                    <div class="service-card bg-white rounded-xl overflow-hidden">
+                        <div class="h-48 overflow-hidden">
+                            <img src="media/svarka.jpeg" 
+                                 alt="Сварочные работы" 
+                                 class="w-full h-full object-cover transition duration-500 hover:scale-110"
+                                 data-image-key="service1_image"
+                                 loading="lazy">
+                        </div>
+                        <div class="p-6">
+                            <div class="w-12 h-12 bg-primary rounded-full flex items-center justify-center text-white mb-4">
+                                <i class="fas fa-industry text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold mb-3 text-dark" 
+                                data-content-key="service1_title">Сварочные работы</h3>
+                            <p class="mb-4" data-content-key="service1_description">Профессиональные сварочные работы для различных конструкций и материалов.</p>
+                            <a href="all-works.html#svar" class="text-primary font-medium flex items-center"
+                               data-content-key="service1_link">
+                                Подробнее
+                                <i class="fas fa-arrow-right ml-2 text-sm"></i>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- Покрасочные работы -->
+                    <div class="service-card bg-white rounded-xl overflow-hidden">
+                        <div class="h-48 overflow-hidden">
+                            <img src="media/pokraska.jpg" 
+                                 alt="Покрасочные работы" 
+                                 class="w-full h-full object-cover transition duration-500 hover:scale-110"
+                                 data-image-key="service2_image"
+                                 loading="lazy">
+                        </div>
+                        <div class="p-6">
+                            <div class="w-12 h-12 bg-primary rounded-full flex items-center justify-center text-white mb-4">
+                                <i class="fas fa-paint-roller text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold mb-3 text-dark" 
+                                data-content-key="service2_title">Покрасочные работы</h3>
+                            <p class="mb-4" data-content-key="service2_description">Высококачественная покраска поверхностей с использованием современных технологий.</p>
+                            <a href="all-works.html#pokr" class="text-primary font-medium flex items-center"
+                               data-content-key="service2_link">
+                                Подробнее
+                                <i class="fas fa-arrow-right ml-2 text-sm"></i>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- Общестроительные и отделочные работы -->
+                    <div class="service-card bg-white rounded-xl overflow-hidden">
+                        <div class="h-48 overflow-hidden">
+                            <img src="media/obshestriotelnyse.jpg" 
+                                 alt="Общестроительные и отделочные работы" 
+                                 class="w-full h-full object-cover transition duration-500 hover:scale-110"
+                                 data-image-key="service3_image"
+                                 loading="lazy">
+                        </div>
+                        <div class="p-6">
+                            <div class="w-12 h-12 bg-primary rounded-full flex items-center justify-center text-white mb-4">
+                                <i class="fas fa-tools text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold mb-3 text-dark" 
+                                data-content-key="service3_title">Общестроительные и отделочные работы</h3>
+                            <p class="mb-4" data-content-key="service3_description">Комплексные строительные и отделочные работы для жилых и коммерческих объектов.</p>
+                            <a href="all-works.html#obsh" class="text-primary font-medium flex items-center"
+                               data-content-key="service3_link">
+                                Подробнее
+                                <i class="fas fa-arrow-right ml-2 text-sm"></i>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- Пескоструйная обработка -->
+                    <div class="service-card bg-white rounded-xl overflow-hidden">
+                        <div class="h-48 overflow-hidden">
+                            <img src="media/poskostyi.jpg" 
+                                 alt="Пескоструйная обработка" 
+                                 class="w-full h-full object-cover transition duration-500 hover:scale-110"
+                                 data-image-key="service4_image"
+                                 loading="lazy">
+                        </div>
+                        <div class="p-6">
+                            <div class="w-12 h-12 bg-primary rounded-full flex items-center justify-center text-white mb-4">
+                                <i class="fas fa-spray-can text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold mb-3 text-dark" 
+                                data-content-key="service4_title">Пескоструйная обработка</h3>
+                            <p class="mb-4" data-content-key="service4_description">Эффективная очистка поверхностей с помощью пескоструйной технологии.</p>
+                            <a href="all-works.html#pesk" class="text-primary font-medium flex items-center"
+                               data-content-key="service4_link">
+                                Подробнее
+                                <i class="fas fa-arrow-right ml-2 text-sm"></i>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- Реконструкция зданий и сооружений -->
+                    <div class="service-card bg-white rounded-xl overflow-hidden">
+                        <div class="h-48 overflow-hidden">
+                            <img src="media/rekonstrukciya.jpeg" 
+                                 alt="Реконструкция зданий и сооружений" 
+                                 class="w-full h-full object-cover transition duration-500 hover:scale-110"
+                                 data-image-key="service5_image"
+                                 loading="lazy">
+                        </div>
+                        <div class="p-6">
+                            <div class="w-12 h-12 bg-primary rounded-full flex items-center justify-center text-white mb-4">
+                                <i class="fas fa-building text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold mb-3 text-dark" 
+                                data-content-key="service5_title">Реконструкция зданий и сооружений</h3>
+                            <p class="mb-4" data-content-key="service5_description">Модернизация и обновление существующих зданий и сооружений.</p>
+                            <a href="all-works.html#rekon" class="text-primary font-medium flex items-center"
+                               data-content-key="service5_link">
+                                Подробнее
+                                <i class="fas fa-arrow-right ml-2 text-sm"></i>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- Строительство инженерных коммуникаций -->
+                    <div class="service-card bg-white rounded-xl overflow-hidden">
+                        <div class="h-48 overflow-hidden">
+                            <img src="media/injenerni_kommenikac.jpg" 
+                                 alt="Строительство инженерных коммуникаций" 
+                                 class="w-full h-full object-cover transition duration-500 hover:scale-110"
+                                 data-image-key="service6_image"
+                                 loading="lazy">
+                        </div>
+                        <div class="p-6">
+                            <div class="w-12 h-12 bg-primary rounded-full flex items-center justify-center text-white mb-4">
+                                <i class="fas fa-water text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold mb-3 text-dark" 
+                                data-content-key="service6_title">Строительство инженерных коммуникаций</h3>
+                            <p class="mb-4" data-content-key="service6_description">Проектирование и монтаж систем водоснабжения и водоотведения.</p>
+                            <a href="all-works.html#inzh" class="text-primary font-medium flex items-center"
+                               data-content-key="service6_link">
+                                Подробнее
+                                <i class="fas fa-arrow-right ml-2 text-sm"></i>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- Газоснабжение -->
+                    <div class="service-card bg-white rounded-xl overflow-hidden">
+                        <div class="h-48 overflow-hidden">
+                            <img src="media/gaz.jpg" 
+                                 alt="Газоснабжение" 
+                                 class="w-full h-full object-cover transition duration-500 hover:scale-110"
+                                 data-image-key="service7_image"
+                                 loading="lazy">
+                        </div>
+                        <div class="p-6">
+                            <div class="w-12 h-12 bg-primary rounded-full flex items-center justify-center text-white mb-4">
+                                <i class="fas fa-fire text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold mb-3 text-dark" 
+                                data-content-key="service7_title">Газоснабжение</h3>
+                            <p class="mb-4" data-content-key="service7_description">Установка и обслуживание систем газоснабжения для жилых и промышленных объектов.</p>
+                            <a href="all-works.html#gaz" class="text-primary font-medium flex items-center"
+                               data-content-key="service7_link">
+                                Подробнее
+                                <i class="fas fa-arrow-right ml-2 text-sm"></i>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- Промышленный альпинизм -->
+                    <div class="service-card bg-white rounded-xl overflow-hidden">
+                        <div class="h-48 overflow-hidden">
+                            <img src="media/prom_alpinizm.jpg" 
+                                 alt="Промышленный альпинизм" 
+                                 class="w-full h-full object-cover transition duration-500 hover:scale-110"
+                                 data-image-key="service8_image"
+                                 loading="lazy">
+                        </div>
+                        <div class="p-6">
+                            <div class="w-12 h-12 bg-primary rounded-full flex items-center justify-center text-white mb-4">
+                                <i class="fas fa-mountain text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold mb-3 text-dark" 
+                                data-content-key="service8_title">Промышленный альпинизм</h3>
+                            <p class="mb-4" data-content-key="service8_description">Выполнение высотных работ с использованием методов промышленного альпинизма.</p>
+                            <a href="all-works.html#alp" class="text-primary font-medium flex items-center"
+                               data-content-key="service8_link">
+                                Подробнее
+                                <i class="fas fa-arrow-right ml-2 text-sm"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-20 bg-dark text-white">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                <div class="counter-item p-6">
+                    <div class="text-4xl md:text-5xl font-bold mb-3 font-heading stat-number" 
+                         data-target="13"
+                         data-content-key="counter1_value">0</div>
+                    <div class="text-lg" data-content-key="counter1_label">Лет опыта</div>
+                </div>
+                <div class="counter-item p-6">
+                    <div class="text-4xl md:text-5xl font-bold mb-3 font-heading stat-number" 
+                         data-target="420"
+                         data-content-key="counter2_value">0</div>
+                    <div class="text-lg" data-content-key="counter2_label">Завершённых проектов</div>
+                </div>
+                <div class="counter-item p-6">
+                    <div class="text-4xl md:text-5xl font-bold mb-3 font-heading stat-number" 
+                         data-target="350"
+                         data-content-key="counter3_value">0</div>
+                    <div class="text-lg" data-content-key="counter3_label">Довольных клиентов</div>
+                </div>
+                <div class="counter-item p-6">
+                    <div class="text-4xl md:text-5xl font-bold mb-3 font-heading stat-number" 
+                         data-target="50"
+                         data-content-key="counter4_value">0</div>
+                    <div class="text-lg" data-content-key="counter4_label">Профессионалов в команде</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="gallery" class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 font-heading text-dark" 
+                    data-content-key="gallery_title">Галерея</h2>
+                <div class="w-20 h-1 bg-primary mx-auto"></div>
+                <p class="mt-6 max-w-2xl mx-auto" 
+                   data-content-key="gallery_subtitle">Посмотрите примеры наших реализованных проектов</p>
+            </div>
+            
+            <div data-dynamic-type="projects" data-content-key="projects_list">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="gallery-item rounded-xl overflow-hidden shadow-lg" data-full-description="Полное описание проекта ремонта квартиры в ЖК 'Солнечный'.">
+                        <img src="https://images.unsplash.com/photo-1613490493576-7fde63acd811?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" 
+                             alt="Интерьер квартиры" 
+                             class="w-full h-64 object-cover"
+                             data-image-key="project1_image"
+                             loading="lazy">
+                        <div class="p-4 bg-white">
+                            <h3 class="font-bold text-lg mb-1" 
+                                data-content-key="project1_title">Ремонт квартиры в ЖК "Солнечный"</h3>
+                            <p class="text-gray-600" 
+                               data-content-key="project1_location">Москва, 2023</p>
+                        </div>
+                    </div>
+                    
+                    <div class="gallery-item rounded-xl overflow-hidden shadow-lg" data-full-description="Полное описание проекта строительства коттеджа в Подмосковье.">
+                        <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" 
+                             alt="Загородный дом" 
+                             class="w-full h-64 object-cover"
+                             data-image-key="project2_image"
+                             loading="lazy">
+                        <div class="p-4 bg-white">
+                            <h3 class="font-bold text-lg mb-1" 
+                                data-content-key="project2_title">Коттедж в Подмосковье</h3>
+                            <p class="text-gray-600" 
+                               data-content-key="project2_location">Московская область, 2022</p>
+                        </div>
+                    </div>
+                    
+                    <div class="gallery-item rounded-xl overflow-hidden shadow-lg" data-full-description="Полное описание проекта ремонта офиса компании 'ТехноПрофи'.">
+                        <img src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" 
+                             alt="Офисное помещение" 
+                             class="w-full h-64 object-cover"
+                             data-image-key="project3_image"
+                             loading="lazy">
+                        <div class="p-4 bg-white">
+                            <h3 class="font-bold text-lg mb-1" 
+                                data-content-key="project3_title">Ремонт офиса компании "ТехноПрофи"</h3>
+                            <p class="text-gray-600" 
+                               data-content-key="project3_location">Москва, 2023</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12">
+                <a href="gallery-ful.html" class="bg-primary hover:bg-secondary text-white px-8 py-3 rounded-full text-lg font-bold transition inline-flex items-center"
+                   data-content-key="gallery_button">
+                    Смотреть всю галерею
+                    <i class="fas fa-arrow-right ml-3"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-20 bg-primary">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold mb-6 text-white font-heading" 
+                data-content-key="cta_title">Готовы начать проект?</h2>
+            <p class="text-xl text-white/90 max-w-2xl mx-auto mb-10" 
+               data-content-key="cta_text">Оставьте заявку и получите бесплатную консультацию от нашего специалиста</p>
+            <button class="bg-white hover:bg-gray-100 text-primary px-8 py-4 rounded-full text-lg font-bold transition"
+                    data-content-key="cta_button">
+                Оставить заявку
+            </button>
+        </div>
+    </section>
+
+    <section id="contacts" class="py-20 bg-light">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 font-heading text-dark" 
+                    data-content-key="contact_title">Контакты</h2>
+                <div class="w-20 h-1 bg-primary mx-auto"></div>
+            </div>
+            
+            <div class="flex flex-col lg:flex-row gap-10">
+                <div class="lg:w-1/2">
+                    <div class="bg-white rounded-xl shadow-lg p-8">
+                        <h3 class="text-2xl font-bold mb-6 text-dark" 
+                            data-content-key="form_title">Оставьте сообщение</h3>
+                        <form class="contact-form" action="https://formspree.io/f/xjkggedo" method="POST">
+                            <div class="mb-5">
+                                <label class="block text-gray-700 mb-2" for="name">Имя</label>
+                                <input type="text" id="name" name="name" class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50" required>
+                            </div>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
+                                <div>
+                                    <label class="block text-gray-700 mb-2" for="phone">Телефон</label>
+                                    <input type="tel" id="phone" name="phone" class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50" required>
+                                </div>
+                                <div>
+                                    <label class="block text-gray-700 mb-2" for="email">Email</label>
+                                    <input type="email" id="email" name="email" class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50" required>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-5">
+                                <label class="block text-gray-700 mb-2" for="message">Сообщение</label>
+                                <textarea id="message" name="message" rows="5" class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50" required></textarea>
+                            </div>
+                            
+                            <button type="submit" class="w-full bg-primary hover:bg-secondary text-white py-3 rounded-lg font-bold transition">
+                                Отправить сообщение
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                
+                <div class="lg:w-1/2">
+                    <div class="bg-white rounded-xl shadow-lg p-8 h-full">
+                        <h3 class="text-2xl font-bold mb-6 text-dark" 
+                            data-content-key="contact_info_title">Контактная информация</h3>
+                        
+                        <div class="space-y-6">
+                            <div class="flex items-start">
+                                <div class="text-primary mr-4 mt-1">
+                                    <i class="fas fa-map-marker-alt text-xl"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-lg mb-1" 
+                                        data-content-key="address_title">Адрес</h4>
+                                    <p data-content-key="address">г. Москва, ул. Строителей, д. 15, офис 304</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="text-primary mr-4 mt-1">
+                                    <i class="fas fa-phone-alt text-xl"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-lg mb-1" 
+                                        data-content-key="phone_title">Телефон</h4>
+                                    <p><a href="tel:+79991234567" data-content-key="phone1">+7 (999) 123-45-67</a></p>
+                                    <p><a href="tel:+74951234567" data-content-key="phone2">+7 (495) 123-45-67</a></p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="text-primary mr-4 mt-1">
+                                    <i class="fas fa-envelope text-xl"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-lg mb-1" 
+                                        data-content-key="email_title">Email</h4>
+                                    <p><a href="mailto:info@stroyprofi.ru" data-content-key="email1">info@stroyprofi.ru</a></p>
+                                    <p><a href="mailto:sales@stroyprofi.ru" data-content-key="email2">sales@stroyprofi.ru</a></p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="text-primary mr-4 mt-1">
+                                    <i class="fas fa-clock text-xl"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-lg mb-1" 
+                                        data-content-key="schedule_title">Режим работы</h4>
+                                    <p data-content-key="schedule_weekdays">Пн-Пт: 9:00 - 18:00</p>
+                                    <p data-content-key="schedule_saturday">Сб: 10:00 - 15:00</p>
+                                    <p data-content-key="schedule_sunday">Вс: выходной</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-10">
+                            <h4 class="font-bold text-lg mb-4" 
+                                data-content-key="social_title">Мы в социальных сетях</h4>
+                            <div class="flex space-x-4">
+                                <a data-social-key="vk" href="#" class="w-12 h-12 rounded-full bg-gray-200 flex items-center justify-center text-gray-700 hover:bg-primary hover:text-white transition">
+                                    <i class="fab fa-vk text-xl"></i>
+                                </a>
+                                <a data-social-key="tg" href="#" class="w-12 h-12 rounded-full bg-gray-200 flex items-center justify-center text-gray-700 hover:bg-primary hover:text-white transition">
+                                    <i class="fab fa-telegram text-xl"></i>
+                                </a>
+                                <a data-social-key="ig" href="#" class="w-12 h-12 rounded-full bg-gray-200 flex items-center justify-center text-gray-700 hover:bg-primary hover:text-white transition">
+                                    <i class="fab fa-instagram text-xl"></i>
+                                </a>
+                                <a data-social-key="yt" href="#" class="w-12 h-12 rounded-full bg-gray-200 flex items-center justify-center text-gray-700 hover:bg-primary hover:text-white transition">
+                                    <i class="fab fa-youtube text-xl"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="h-96 w-full">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2245.373789135803!2d37.61842307699905!3d55.7536756730701!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46b54a5a738fa419%3A0x7c347d506bc5230!2z0JzQvtGB0LrQstCw!5e0!3m2!1sru!2sru!4v1687852345678!5m2!1sru!2sru" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+
+    <footer class="bg-dark text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center mb-6">
+                        <div class="bg-primary w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-xl mr-2">SP</div>
+                        <span class="text-xl font-bold text-white font-heading">
+                            <span data-content-key="footer_company_name">Строй</span>
+                            <span data-content-key="footer_company_highlight" class="text-primary">Профи</span>
+                        </span>
+                    </div>
+                    <p class="mb-4 text-gray-300" 
+                       data-content-key="footer_tagline">Надёжные решения в строительстве с 2010 года</p>
+                    <div class="flex space-x-4">
+                        <a data-social-key="vk_footer" href="#" class="text-gray-300 hover:text-white transition">
+                            <i class="fab fa-vk"></i>
+                        </a>
+                        <a data-social-key="telegram_footer" href="#" class="text-gray-300 hover:text-white transition">
+                            <i class="fab fa-telegram"></i>
+                        </a>
+                        <a data-social-key="instagram_footer" href="#" class="text-gray-300 hover:text-white transition">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a data-social-key="youtube_footer" href="#" class="text-gray-300 hover:text-white transition">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold mb-6" 
+                        data-content-key="footer_nav_title">Навигация</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#home" class="text-gray-300 hover:text-white transition" 
+                               data-content-key="footer_menu_home">Главная</a></li>
+                        <li><a href="#about" class="text-gray-300 hover:text-white transition"
+                               data-content-key="footer_menu_about">О компании</a></li>
+                        <li><a href="#services" class="text-gray-300 hover:text-white transition"
+                               data-content-key="footer_menu_services">Услуги</a></li>
+                        <li><a href="all-works.html" class="text-gray-300 hover:text-white transition"
+                               data-content-key="footer_menu_all_works">Все работы</a></li>
+                        <li><a href="gallery-ful.html" class="text-gray-300 hover:text-white transition"
+                               data-content-key="footer_menu_gallery">Галерея</a></li>
+                        <li><a href="#contacts" class="text-gray-300 hover:text-white transition"
+                               data-content-key="footer_menu_contacts">Контакты</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold mb-6" 
+                        data-content-key="footer_services_title">Услуги</h4>
+                    <ul class="space-y-3">
+                        <li><a href="all-works.html#svar" class="text-gray-300 hover:text-white transition"
+                            data-content-key="footer_service1">Сварочные работы</a></li>
+                        <li><a href="all-works.html#pokr" class="text-gray-300 hover:text-white transition"
+                            data-content-key="footer_service2">Покрасочные работы</a></li>
+                        <li><a href="all-works.html#obsh" class="text-gray-300 hover:text-white transition"
+                            data-content-key="footer_service3">Общестроительные работы</a></li>
+                        <li><a href="all-works.html#pesk" class="text-gray-300 hover:text-white transition"
+                            data-content-key="footer_service4">Пескоструйная обработка</a></li>
+                        <li><a href="all-works.html#rekon" class="text-gray-300 hover:text-white transition"
+                            data-content-key="footer_service5">Реконструкция зданий</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold mb-6" 
+                        data-content-key="footer_contacts_title">Контакты</h4>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <i class="fas fa-map-marker-alt text-gray-400 mt-1 mr-3"></i>
+                            <span class="text-gray-300" 
+                                  data-content-key="footer_address">г. Москва, ул. Строителей, д. 15</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-phone-alt text-gray-400 mt-1 mr-3"></i>
+                            <a href="tel:+79991234567" class="text-gray-300"
+                            data-content-key="footer_phone">+7 (999) 123-45-67</a>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-envelope text-gray-400 mt-1 mr-3"></i>
+                            <a href="mailto:info@stroyprofi.ru" class="text-gray-300"
+                            data-content-key="footer_email">info@stroyprofi.ru</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-12 pt-8 text-center text-gray-400">
+                <p data-content-key="copyright">© 2023 Строительная компания "СтройПрофи". Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <div id="gallery-modal" class="modal-overlay fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center hidden">
+        <div class="modal-content bg-white p-6 rounded-lg max-w-3xl w-full mx-4 relative">
+            <button class="close-modal absolute top-4 right-4 text-2xl text-gray-600 hover:text-gray-800 z-20">×</button>
+            <div class="modal-image-container relative">
+                <img src="" alt="" class="modal-image w-full h-auto cursor-pointer" id="modal-image">
+            </div>
+            <div class="modal-description mt-4">
+                <h3 class="font-bold text-lg mb-2" id="modal-title"></h3>
+                <p id="modal-location"></p>
+                <p id="modal-full-description" class="mt-2"></p>
+            </div>
+        </div>
+    </div>
+
+    <div id="contact-modal" class="modal-overlay fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center hidden">
+        <div class="modal-content bg-white p-6 rounded-lg max-w-3xl w-full mx-4 relative">
+            <button class="close-contact-modal absolute top-4 right-4 text-2xl text-gray-600 hover:text-gray-800 z-20">×</button>
+            <div class="contact-form">
+                <h3 class="text-2xl font-bold mb-6 text-dark" data-content-key="modal_form_title">Оставьте заявку</h3>
+                <form action="https://formspree.io/f/xjkggedo" method="POST">
+                    <div class="mb-5">
+                        <label class="block text-gray-700 mb-2" for="modal-name">Имя</label>
+                        <input type="text" id="modal-name" name="name" class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50" required>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
+                        <div>
+                            <label class="block text-gray-700 mb-2" for="modal-phone">Телефон</label>
+                            <input type="tel" id="modal-phone" name="phone" class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50" required>
+                        </div>
+                        <div>
+                            <label class="block text-gray-700 mb-2" for="modal-email">Email</label>
+                            <input type="email" id="modal-email" name="email" class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50" required>
+                        </div>
+                    </div>
+                    <div class="mb-5">
+                        <label class="block text-gray-700 mb-2" for="modal-message">Сообщение</label>
+                        <textarea id="modal-message" name="message" rows="5" class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50" required></textarea>
+                    </div>
+                    <button type="submit" class="w-full bg-primary hover:bg-secondary text-white py-3 rounded-lg font-bold transition">
+                        Отправить заявку
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="fullscreen-image" class="fixed inset-0 bg-black z-60 flex items-center justify-center hidden">
+        <button class="close-fullscreen absolute top-4 right-4 text-2xl text-white hover:text-gray-300">×</button>
+        <div class="zoom-controls absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-4">
+            <button class="zoom-out bg-white text-black px-4 py-2 rounded">-</button>
+            <button class="zoom-in bg-white text-black px-4 py-2 rounded">+</button>
+        </div>
+        <img src="" alt="" class="fullscreen-image max-w-full max-h-full object-contain transform transition-transform duration-200" id="fullscreen-image-element">
+    </div>
+
+    <script>
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('open');
+        });
+        
+        const counters = document.querySelectorAll('.stat-number');
+        const speed = 200;
+        
+        const startCounter = () => {
+            counters.forEach(counter => {
+                const updateCount = () => {
+                    const target = +counter.getAttribute('data-target');
+                    const count = +counter.innerText;
+                    
+                    const inc = target / speed;
+                    
+                    if (count < target) {
+                        counter.innerText = Math.ceil(count + inc);
+                        setTimeout(updateCount, 1);
+                    } else {
+                        counter.innerText = target;
+                    }
+                };
+                
+                updateCount();
+            });
+        };
+        
+        const statsSection = document.querySelector('section.bg-dark');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    startCounter();
+                    observer.unobserve(statsSection);
+                }
+            });
+        }, { threshold: 0.5 });
+        
+        observer.observe(statsSection);
+        
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    window.scrollTo({
+                        top: target.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        const galleryItems = document.querySelectorAll('.gallery-item');
+        const modal = document.getElementById('gallery-modal');
+        const modalImage = modal.querySelector('#modal-image');
+        const modalTitle = modal.querySelector('#modal-title');
+        const modalLocation = modal.querySelector('#modal-location');
+        const modalFullDescription = modal.querySelector('#modal-full-description');
+        const closeModal = modal.querySelector('.close-modal');
+        const fullscreenImage = document.getElementById('fullscreen-image');
+        const fullscreenImageElement = document.getElementById('fullscreen-image-element');
+        const closeFullscreen = document.querySelector('.close-fullscreen');
+        const zoomInButton = document.querySelector('.zoom-in');
+        const zoomOutButton = document.querySelector('.zoom-out');
+
+        const contactModal = document.getElementById('contact-modal');
+        const openModalButtons = document.querySelectorAll('[data-content-key="hero_btn_primary"], [data-content-key="cta_button"]');
+        const closeContactModal = contactModal.querySelector('.close-contact-modal');
+
+        let scale = 1;
+        const minScale = 0.5;
+        const maxScale = 3;
+        const scaleStep = 0.2;
+
+        function updateScale() {
+            fullscreenImageElement.style.transform = `scale(${scale})`;
+        }
+
+        galleryItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const img = item.querySelector('img');
+                const title = item.querySelector('h3').textContent;
+                const location = item.querySelector('p').textContent;
+                const fullDescription = item.getAttribute('data-full-description') || 'Полное описание проекта.';
+
+                modalImage.src = img.src;
+                modalImage.alt = img.alt;
+                modalTitle.textContent = title;
+                modalLocation.textContent = location;
+                modalFullDescription.textContent = fullDescription;
+                modal.classList.remove('hidden');
+            });
+        });
+
+        modalImage.addEventListener('click', () => {
+            fullscreenImageElement.src = modalImage.src;
+            fullscreenImageElement.alt = modalImage.alt;
+            scale = 1;
+            updateScale();
+            fullscreenImage.classList.remove('hidden');
+            modal.classList.add('hidden');
+        });
+
+        closeModal.addEventListener('click', () => {
+            modal.classList.add('hidden');
+        });
+
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.classList.add('hidden');
+            }
+        });
+
+        closeFullscreen.addEventListener('click', () => {
+            fullscreenImage.classList.add('hidden');
+        });
+
+        fullscreenImage.addEventListener('click', (e) => {
+            if (e.target === fullscreenImage) {
+                fullscreenImage.classList.add('hidden');
+            }
+        });
+
+        zoomInButton.addEventListener('click', () => {
+            if (scale < maxScale) {
+                scale += scaleStep;
+                updateScale();
+            }
+        });
+
+        zoomOutButton.addEventListener('click', () => {
+            if (scale > minScale) {
+                scale -= scaleStep;
+                updateScale();
+            }
+        });
+
+        const hammer = new Hammer(fullscreenImageElement);
+        hammer.get('pinch').set({ enable: true });
+
+        let initialScale = scale;
+        hammer.on('pinchstart', () => {
+            initialScale = scale;
+        });
+
+        hammer.on('pinch', (e) => {
+            scale = Math.max(minScale, Math.min(maxScale, initialScale * e.scale));
+            updateScale();
+        });
+
+        openModalButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                contactModal.classList.remove('hidden');
+            });
+        });
+
+        closeContactModal.addEventListener('click', () => {
+            contactModal.classList.add('hidden');
+        });
+
+        contactModal.addEventListener('click', (e) => {
+            if (e.target === contactModal) {
+                contactModal.classList.add('hidden');
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                if (!fullscreenImage.classList.contains('hidden')) {
+                    fullscreenImage.classList.add('hidden');
+                } else if (!modal.classList.contains('hidden')) {
+                    modal.classList.add('hidden');
+                } else if (!contactModal.classList.contains('hidden')) {
+                    contactModal.classList.add('hidden');
+                }
+            }
+        });
+    </script>
+</body>
+</html>
